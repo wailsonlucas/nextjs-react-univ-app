@@ -1,0 +1,13 @@
+.profile {
+	background:#F1E5D1;
+	min-height: 100vh;
+}
+.profile header {
+	color:#fff;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background:#DC5F00;
+	font-size:3rem;
+}

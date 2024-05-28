@@ -41,11 +41,15 @@ export default function Home() {
               </div>
               :
               <div>
-                <input type="email" placeholder="email"/>
-                <input type="email" placeholder="email"/>
-                <input type="email" placeholder="email"/>
-                <input type="email" placeholder="email"/>
-                <input type="password" placeholder="password"/>
+                <input type="email" placeholder="Entrer votre n_inscription"/>
+                <input type="email" placeholder="Entrer votre Nom"/>
+                <input type="email" placeholder="Entrer votre Prenom"/>
+                <input type="email" placeholder="Date et lieu de naissance"/>
+                <input type="password" placeholder="Spécialité"/>
+                <input type="password" placeholder="Numéro de cart national"/>
+                <input type="password" placeholder="Date de publication"/>
+                <input type="password" placeholder="A propos de votre cercle"/>
+                <input type="password" placeholder="Adresse"/>
                 <button>se connecter</button>
                 <p onClick={() => setLoginUI(true)} className={s.suggest}>si vous avez un compte, essayez de vous connecter maintenant</p>
               </div>
