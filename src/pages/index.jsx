@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export default function Home() {
   let [loginUI, setLoginUI] = useState(true)
-  
+
   return (
     <div className={s.container}>
       <Image 
@@ -37,7 +37,7 @@ export default function Home() {
                 <input type="email" placeholder="email"/>
                 <input type="password" placeholder="password"/>
                 <button>se connecter</button>
-                <p onClick={() => setLoginUI(false)} className={s.suggest}>si vous n'avez pas de compte, créez-en un maintenant</p>
+                <p onClick={() => setLoginUI(false)} className={s.suggest}>si vous ne avez pas de compte, créez-en un maintenant</p>
               </div>
               :
               <div>
