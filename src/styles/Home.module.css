@@ -1,0 +1,73 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.welcom {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom:20px;
+}
+.hero {
+  align-items: center;
+  background: #fff;
+  padding:20px;
+  width:800px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+.accounts_types {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.accounts_types > div {
+  border:1px solid #fff;
+  padding:10px;
+  margin:0 12px;
+  border-radius: 6px;
+  flex:1;
+  line-height: 26px;
+   background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+}
+.accounts_types > div > p:first-child {
+  color:grey;
+}
+.inputs_container {
+  width:50%;
+  margin:0 auto;
+  margin-top:20px;
+}
+.inputs_container > div {
+  display: flex;
+  flex-direction: column;
+}
+.inputs_container input {
+  margin:4px 0;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border:1px solid #fff;
+  border-radius:6px;
+  padding:4px;
+}
+.inputs_container button {
+  height: 40px;
+  margin:4px 0;
+  background:#C738BD;
+  border:0;
+  color:#fff;
+  border-radius: 6px;
+}
+.suggest {
+  text-decoration: underline;
+  margin-top:4px;
+  cursor: pointer;
+  text-align: center;
+}
