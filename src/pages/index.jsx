@@ -120,7 +120,11 @@ export default function Home() {
         })
         let res = await req.json()
         localStorage.setItem('app-token', res)
-        router.push('/profile')
+        if(res.role === 'user') {
+          router.push('/profile')
+        } else {
+          router.push('/admin')
+        }
 
     }catch(err){
       console.error(err)
