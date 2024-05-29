@@ -10,4 +10,35 @@
 	align-items: center;
 	background:#DC5F00;
 	font-size:3rem;
+	margin-bottom:40px;
+}
+/*============*/
+.content {
+	width:60%;
+	margin:0 auto;
+	min-height: 80vh;
+/*	margin-top:20px;*/
+}
+.demande_date {
+	display: flex;
+	align-items: center;
+	margin-top:20px;
+}
+.demande_date > p {
+	margin-right:10px;
+}
+.submit {
+	width:100%;
+	background:#003285;
+	color:#fff;
+	border:none;
+	height: 50px;
+	font-size: 1.4rem;
+	border-radius:6px;
+	cursor: pointer;
+	margin-top:20px;
+}
+.doc {
+	display: flex;
+	align-items:center;
 }

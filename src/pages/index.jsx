@@ -1,12 +1,131 @@
+import { useRouter } from 'next/router'
 import s from "@/styles/Home.module.css";
 import { useState } from 'react'
 import Image from 'next/image'
+//MUI
+import Alert from '@mui/material/Alert';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 
 export default function Home() {
-  let [loginUI, setLoginUI] = useState(true)
+  let router = useRouter()
+  let [loginUI, setLoginUI] = useState(false)
+  let [login, setLogin] = useState({
+    nom:null,
+    n_inscription:null
+  })
+  let [signup, setSignup] = useState({
+    n_inscription: "XX1",
+    nom: "XX2",
+    prenom: "XX3" ,
+    date_n_time_birth:"XX4" ,
+    national_id: "XX5",
+    date_publication: "XX6",
+    a_propos: "XX7",
+    adresse: "XX8",
+    specialite: "XX9",
+  })
+  let [alert, setAlert] = useState({
+    state:false,
+    message:null,
+    severit:null
+  })
+
+  async function handleSignup(){
+    try {
+      let {
+        n_inscription,
+        nom,
+        prenom ,
+        date_n_time_birth ,
+        national_id,
+        date_publication,
+        a_propos,
+        adresse,
+        specialite
+      } = signup
+
+      if(!n_inscription ||
+        !nom ||
+        !prenom||
+        !date_n_time_birth ||
+        !national_id ||
+        !date_publication ||
+        !a_propos ||
+        !adresse ||
+        !specialite) return setAlert({
+          state:true,
+          message:"veuillez remplir tous les champs",
+          severit:"error"
+        })
+
+        let req = await fetch('/api/signup', {
+          method: "POST",
+          headers: {
+            'content-type':'application/json'
+          },
+          body: JSON.stringify(signup)
+        })
+        setSignup({
+           n_inscription: null,
+            nom: null,
+            prenom: null,
+            date_n_time_birth:null,
+            national_id: null,
+            date_publication: null,
+            a_propos: null,
+            adresse: null,
+            specialite: null
+        })
+        if(req.ok) setLoginUI(true)
+
+    }catch(err){
+      console.error(err)
+    }
+  }
+
+  async function handleLogin(){
+    try {
+      let {
+        n_inscription,
+        nom
+      } = login
+
+      if(!n_inscription ||
+        !nom 
+        ) return setAlert({
+          state:true,
+          message:"veuillez remplir tous les champs",
+          severit:"error"
+        })
+
+        let req = await fetch('/api/login', {
+          method: "POST",
+          headers: {
+            'content-type':'application/json'
+          },
+          body: JSON.stringify(login)
+        })
+        setSignup({
+           n_inscription: null,
+            nom: null
+        })
+        if(req.ok) router.push('/profile')
+
+    }catch(err){
+      console.error(err)
+    }
+  }
 
   return (
+    <>
+      {alert.state&&<Alert onClick={() => setAlert({
+        state:false,
+        message:null,
+        severity:null
+      })} icon={<ErrorOutlineIcon fontSize="inherit" />} severity="error" variant="filled">
+        {alert.message}
+      </Alert>}
     <div className={s.container}>
       <Image 
         src="/index.jpg"
@@ -34,28 +153,31 @@ export default function Home() {
             {
               loginUI?
               <div>
-                <input type="email" placeholder="email"/>
-                <input type="password" placeholder="password"/>
+                <input name="nom" value={signup.n_inscription} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre nom"/>
+                <input name="n_inscription" value={signup.n_inscription} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer le mot de pass"/>
                 <button>se connecter</button>
                 <p onClick={() => setLoginUI(false)} className={s.suggest}>si vous ne avez pas de compte, créez-en un maintenant</p>
               </div>
               :
               <div>
-                <input type="email" placeholder="Entrer votre n_inscription"/>
-                <input type="email" placeholder="Entrer votre Nom"/>
-                <input type="email" placeholder="Entrer votre Prenom"/>
-                <input type="email" placeholder="Date et lieu de naissance"/>
-                <input type="password" placeholder="Spécialité"/>
-                <input type="password" placeholder="Numéro de cart national"/>
-                <input type="password" placeholder="Date de publication"/>
-                <input type="password" placeholder="A propos de votre cercle"/>
-                <input type="password" placeholder="Adresse"/>
-                <button>se connecter</button>
+                <input name="n_inscription" value={signup.n_inscription} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre n_inscription"/>
+                <input name="nom" value={signup.nom} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre Nom"/>
+                <input name="prenom" value={signup.prenom} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre Prenom"/>
+                <input name="date_n_time_birth" value={signup.date_n_time_birth} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Date et lieu de naissance"/>
+                <input name="specialite" value={signup.specialite} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Spécialité"/>
+                <input name="national_id" value={signup.national_id} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Numéro de cart national"/>
+                <input name="date_publication" value={signup.date_publication} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Date de publication"/>
+                <input name="a_propos" value={signup.a_propos} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="A propos de votre cercle"/>
+                <input name="adresse" value={signup.adresse} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Adresse"/>
+                <button onClick={handleSignup}>s'inscrire</button>
                 <p onClick={() => setLoginUI(true)} className={s.suggest}>si vous avez un compte, essayez de vous connecter maintenant</p>
               </div>
             }
           </div>
       </div>
     </div>
+    </>
   );
 }
+
+

@@ -64,6 +64,7 @@
   border:0;
   color:#fff;
   border-radius: 6px;
+  cursor: pointer;
 }
 .suggest {
   text-decoration: underline;
