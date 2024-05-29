@@ -169,7 +169,7 @@ export default function Home() {
                 <input name="date_publication" value={signup.date_publication} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Date de publication"/>
                 <input name="a_propos" value={signup.a_propos} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="A propos de votre cercle"/>
                 <input name="adresse" value={signup.adresse} onChange={(e) => setSignup(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Adresse"/>
-                <button onClick={handleSignup}>s'inscrire</button>
+                <button onClick={handleSignup}>se inscrire</button>
                 <p onClick={() => setLoginUI(true)} className={s.suggest}>si vous avez un compte, essayez de vous connecter maintenant</p>
               </div>
             }
