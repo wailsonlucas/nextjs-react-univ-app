@@ -17,7 +17,9 @@ let vercel_config = {
 
 let environment = process.env.ENVIRONMENT
 
-let pool = new Pool( "postgres://default:zb95UDVIqGiZ@ep-tiny-silence-a4q1g7fk.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require")
+let pool = new Pool({
+	connectionString: "postgres://default:zb95UDVIqGiZ@ep-tiny-silence-a4q1g7fk.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"
+})
 // let pool = new Pool( environment === 'production' ? vercel_config : local_config)
 
 module.exports = pool
