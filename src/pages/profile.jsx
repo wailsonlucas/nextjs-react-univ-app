@@ -174,7 +174,7 @@ export default function Profile(){
 										<p className={s.dem_num}>{index}</p>
 										<p className={s.dem_title}>{dem.docs_list}</p>
 										<p className={s.dem_date}>{formattedDate}</p>
-										<p className={s.dem_status} style={ dem.status=="accept"?{color:'green'}:dem.status=="refuse"?{color:'red'}:{color:'grey'}}>{dem.status}</p>
+										<p className={`${s.dem_status} ${dem.status==='accept'?s.accept:dem.status==='refuse'?s.refuse:s.traitment}`}>{dem.status}</p>
 									</div>
 									<DeleteIcon onClick={() => handleDeleteDemande(dem.id)} sx={{color:'#FF0000', cursor:'pointer'}} />
 								</div>

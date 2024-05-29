@@ -84,3 +84,12 @@
 .dem_date {
 	width:140px;
 }
+.accept {
+	color:green;
+}
+.refuse {
+	color:red;
+}
+.traitment {
+	color:grey;
+}
