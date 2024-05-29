@@ -23,7 +23,7 @@ export default function Profile(){
 		docsList: [],
 		doc_date: null
 	})
-	let [userDemends, setUserDemands] = useState([])
+	let [userDemandes, setUserDemands] = useState([])
 	let [loading, setLoading] = useState(true)
 	let [alert, setAlert] = useState({
 		state:false,
@@ -52,7 +52,7 @@ export default function Profile(){
 			console.error(err)
 		}
 	}
-
+	console.log(doc)
 	function handleTabsChange(){
 		setTabState(!tabState)
 	}
@@ -103,7 +103,7 @@ export default function Profile(){
 			console.error(err)
 		}
 	}
-
+	console.log(userDemandes)
 	return(
 		<>
 		{loading?
@@ -161,7 +161,7 @@ export default function Profile(){
 		        	:
 		        	<div>
 		        		{
-							userDemends&&userDemends.map((dem, index) => {
+							userDemandes&&userDemandes.map((dem, index) => {
 								const date = new Date(dem.doc_date);
 								const day = date.getDate().toString().padStart(2, "0");
 								const month = (date.getMonth() + 1).toString().padStart(2, "0");
