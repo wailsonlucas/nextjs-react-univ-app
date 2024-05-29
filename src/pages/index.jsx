@@ -9,26 +9,26 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 export default function Home() {
   let router = useRouter()
-  let [loginUI, setLoginUI] = useState(false)
+  let [loginUI, setLoginUI] = useState(true)
   let [login, setLogin] = useState({
     nom:null,
     n_inscription:null
   })
   let [signup, setSignup] = useState({
-    n_inscription: "XX1",
-    nom: "XX2",
-    prenom: "XX3" ,
-    date_n_time_birth:"XX4" ,
-    national_id: "XX5",
-    date_publication: "XX6",
-    a_propos: "XX7",
-    adresse: "XX8",
-    specialite: "XX9",
+    n_inscription: null,
+    nom: null,
+    prenom: null ,
+    date_n_time_birth:null ,
+    national_id: null,
+    date_publication: null,
+    a_propos: null,
+    adresse: null,
+    specialite: null,
   })
   let [alert, setAlert] = useState({
     state:false,
     message:null,
-    severit:null
+    severity:null
   })
 
   async function handleSignup(){
@@ -56,7 +56,7 @@ export default function Home() {
         !specialite) return setAlert({
           state:true,
           message:"veuillez remplir tous les champs",
-          severit:"error"
+          severity:"error"
         })
 
         let req = await fetch('/api/signup', {
@@ -66,7 +66,9 @@ export default function Home() {
           },
           body: JSON.stringify(signup)
         })
-        setSignup({
+        
+        if(req.ok) {
+          setSignup({
            n_inscription: null,
             nom: null,
             prenom: null,
@@ -77,10 +79,16 @@ export default function Home() {
             adresse: null,
             specialite: null
         })
-        if(req.ok) setLoginUI(true)
+          setLoginUI(true)
+        }
 
     }catch(err){
       console.error(err)
+      setAlert({
+        state: true,
+        severity: 'error',
+        message: 'cet utilisateur existe déjà'
+      })
     }
   }
 
@@ -96,7 +104,7 @@ export default function Home() {
         ) return setAlert({
           state:true,
           message:"veuillez remplir tous les champs",
-          severit:"error"
+          severity:"error"
         })
 
         let req = await fetch('/api/login', {
@@ -110,7 +118,9 @@ export default function Home() {
            n_inscription: null,
             nom: null
         })
-        if(req.ok) router.push('/profile')
+        let res = await req.json()
+        localStorage.setItem('app-token', res)
+        router.push('/profile')
 
     }catch(err){
       console.error(err)
@@ -153,9 +163,9 @@ export default function Home() {
             {
               loginUI?
               <div>
-                <input name="nom" value={signup.n_inscription} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre nom"/>
-                <input name="n_inscription" value={signup.n_inscription} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer le mot de pass"/>
-                <button>se connecter</button>
+                <input name="nom" value={login.nom} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer votre nom"/>
+                <input name="n_inscription" value={login.n_inscription} onChange={(e) => setLogin(prev => ({...prev, [e.target.name]:e.target.value}))} type="text" placeholder="Entrer le mot de pass"/>
+                <button onClick={handleLogin}>se connecter</button>
                 <p onClick={() => setLoginUI(false)} className={s.suggest}>si vous ne avez pas de compte, créez-en un maintenant</p>
               </div>
               :

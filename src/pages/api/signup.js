@@ -14,6 +14,11 @@ export default async function handler(req, res) {
         specialite
       } = req.body 
 
+      let check_qry = `SELECT * FROM users WHERE nom='${nom}';`
+      let check_result = await pool.query(check_qry)
+      if(check_result.rowCount > 0) return res.status(400).json('user already exist')
+
+
       // console.log(req.body)
       let qry = `INSERT INTO users(n_inscription, 
         nom, 
