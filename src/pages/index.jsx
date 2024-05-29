@@ -154,13 +154,13 @@ export default function Home() {
         <div className={s.accounts_types}>
           <div>
             <p>Compte utilisateur normal:</p>
-            <p>email: user@user.com</p>
-            <p>password: user</p>
+            <p>nome: user</p>
+            <p>n_inscription: 66443388</p>
           </div>
            <div>
             <p>Compte administrateur:</p>
-            <p>email: admin@admin.com</p>
-            <p>password: admin</p>
+            <p>nome: admin</p>
+            <p>n_inscription: 99885566</p>
           </div>
         </div>
 
