@@ -11,10 +11,8 @@ export default async function handler(req, res) {
 
       let qry = `SELECT * FROM users WHERE nom='${nom}';`
       let result = await pool.query(qry)
-      var token = jwt.sign({ id: result.rows.at(0).nom }, 'my-secret-key');
-
+      var token = jwt.sign({ nom: result.rows.at(0).nom }, 'my-secret-key');
       res.status(200).json(token)
-
     }catch(err){
         console.error(err)
     }

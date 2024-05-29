@@ -42,3 +42,45 @@
 	display: flex;
 	align-items:center;
 }
+.loading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	background: #F1E5D1;
+	line-height: 50px;
+}
+/*================*/
+.demand_element {
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	margin-bottom:8px;
+	background:#FFBF78;
+	padding:8px 4px;
+	border-radius:4px;
+}
+.demand_element > div {
+	display: flex;
+	align-items: center;
+}
+.demand_element > p {
+	display: flex;
+	justify-content: center;
+}
+/*.demand_element * {*/
+/*	border:1px solid red;	*/
+/*}*/
+.dem_num {
+	width:20px;
+}
+.dem_title {
+	width:200px;
+}
+.dem_status {
+
+}
+.dem_date {
+	width:140px;
+}

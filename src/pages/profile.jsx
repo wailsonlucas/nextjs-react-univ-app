@@ -1,6 +1,7 @@
+import { useRouter } from 'next/router'
 import s from "@/styles/profile.module.css"
 import Tabs from '@mui/material/Tabs';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 //MUI
 import Tab from '@mui/material/Tab';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -11,15 +12,42 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CircularProgress from '@mui/material/CircularProgress';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Profile(){
-	let [tabState, setTabState] = useState(true)
+	let router = useRouter()
+	let [tabState, setTabState] = useState(false)
 	let [docsList, setDocsList] = useState([])
+	let [userDemends, setUserDemands] = useState([])
+	let [loading, setLoading] = useState(true)
 	let [alert, setAlert] = useState({
 		state:false,
 		message:null,
 		severit:null
 	})
+
+	useEffect(() => {
+		getUserData()
+	}, [])
+
+	async function getUserData(){
+		let token = localStorage.getItem('app-token')
+		try {
+			let req = await fetch('/api/get-data', {
+				method: 'POST',
+				headers: {
+					'content-type':'application/json',
+					'x-authorization':token
+				},
+			})
+			let res = await req.json()
+			setLoading(false)
+			setUserDemands(res)
+		}catch(err){
+			console.error(err)
+		}
+	}
 
 	function handleTabsChange(){
 		setTabState(!tabState)
@@ -36,6 +64,7 @@ export default function Profile(){
 	}
 
 	async function handleAddDoc(){
+		let token = localStorage.getItem('app-token')
 		try {
 			if(docsList.length == 0) return setAlert({
 				state:true,
@@ -45,17 +74,40 @@ export default function Profile(){
 			let req = await fetch('/api/add-doc', {
 				method: 'POST',
 				headers: {
-					'content-type':'application/json'
+					'content-type':'application/json',
+					'x-authorization': token
 				},
 				body: JSON.stringify(docsList)
 			})
+			if(req.ok) router.reload()
 		} catch(err){
 			console.error(err)
 		}
 	}
 
+	async function handleDeleteDemande(did){
+		try {
+			let req = await fetch('/api/delete-demande', {
+				method: "DELETE",
+				headers: {
+					'content-type':'application/json',
+					'x-did':did
+				}				
+			})
+			if(req.ok) router.reload()
+		}catch(err){
+			console.error(err)
+		}
+	}
 
 	return(
+		<>
+		{loading?
+		<div className={s.loading}>
+			<CircularProgress />
+			<p>Se il vous plaît, attendez</p>
+		</div>
+		:
 		<>
 			{alert.state&&<Alert onClick={() => setAlert({
 				state:false,
@@ -102,12 +154,36 @@ export default function Profile(){
 		        	</div>
 		        	:
 		        	<div>
-		        		<p>toutes vos demandes</p>
+		        		{
+							userDemends&&userDemends.map((dem, index) => {
+								let jsDate = new Date(dem.created_at);
+
+								const date = new Date(dem.created_at);
+
+								const day = date.getDate().toString().padStart(2, "0");
+								const month = (date.getMonth() + 1).toString().padStart(2, "0");
+								const year = date.getFullYear().toString();
+
+								const formattedDate = `${day}-${month}-${year}`;
+
+								return <div key={index} className={s.demand_element}>
+									<div>
+										<p className={s.dem_num}>{index}</p>
+										<p className={s.dem_title}>{dem.title}</p>
+										<p className={s.dem_date}>{formattedDate}</p>
+										<p className={s.dem_status}>{dem.status}</p>
+									</div>
+									<DeleteIcon onClick={() => handleDeleteDemande(dem.id)} sx={{color:'#FF0000', cursor:'pointer'}} />
+								</div>
+							})
+		        		}
 		        	</div>
 		        }
 			</div>
 		</div>
 		</>
+	}
+	</>
 	)
 }
 
