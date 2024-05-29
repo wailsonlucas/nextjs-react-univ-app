@@ -5,7 +5,7 @@ export default async function handler(req, res){
 		if(req.method == "DELETE") {
 			let did = req.headers['x-did']
 			console.log(did)
-			let qry = `DELETE FROM demands WHERE id=${did};`
+			let qry = `DELETE FROM home1_demands WHERE id=${did};`
 			await pool.query(qry)
 			res.status(200).end()
 		}

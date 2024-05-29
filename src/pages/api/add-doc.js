@@ -8,7 +8,7 @@ export default async function handler(req, res) {
 		let authorization = req.headers['x-authorization']
 		// console.log(authorization)
 		let decoded = jwt.verify(authorization, 'my-secret-key');
-		let qry = `SELECT * from users WHERE nom='${decoded.nom}';`
+		let qry = `SELECT * from home1_users WHERE nom='${decoded.nom}';`
 		let result = await pool.query(qry)
 
 

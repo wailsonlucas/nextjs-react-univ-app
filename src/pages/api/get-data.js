@@ -6,7 +6,7 @@ export default async function hendler(req, res){
 		let authorization = req.headers['x-authorization']
 		let decoded = jwt.verify(authorization, 'my-secret-key');
 		// console.log(decoded)
-		let qry = `SELECT * from users WHERE nom='${decoded.nom}';`
+		let qry = `SELECT * from home1_users WHERE nom='${decoded.nom}';`
 		let result = await pool.query(qry)
 		// console.log(result.rows.at(0))
 
