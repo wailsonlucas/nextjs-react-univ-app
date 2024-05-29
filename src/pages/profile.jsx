@@ -172,9 +172,9 @@ export default function Profile(){
 								return <div key={index} className={s.demand_element}>
 									<div>
 										<p className={s.dem_num}>{index}</p>
-										<p className={s.dem_title}>{dem.title}</p>
+										<p className={s.dem_title}>{dem.docs_list}</p>
 										<p className={s.dem_date}>{formattedDate}</p>
-										<p className={s.dem_status} style={{color:dem.status=="accepte"?"green":dem.status=="refuse"?"red":"grey"}}>{dem.status}</p>
+										<p className={s.dem_status} style={ dem.status=="accept"?{color:'green'}:dem.status=="refuse"?{color:'red'}:{color:'grey'}}>{dem.status}</p>
 									</div>
 									<DeleteIcon onClick={() => handleDeleteDemande(dem.id)} sx={{color:'#FF0000', cursor:'pointer'}} />
 								</div>

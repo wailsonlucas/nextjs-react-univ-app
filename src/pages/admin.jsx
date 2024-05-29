@@ -102,7 +102,7 @@ export default function Profile(){
 								const formattedDate = `${day}-${month}-${year}`;
 								return <div className={s.demand_element} key={index}>
 									<p>{index}</p>
-									<p>{entry.title}</p>
+									<p>{entry.docs_list}</p>
 									<p style={{color:entry.status=="accepte"?"green":entry.status=="refuse"?"red":"grey"}}>{entry.status}</p>
 									<p>{formattedDate}</p>
 									<div>
