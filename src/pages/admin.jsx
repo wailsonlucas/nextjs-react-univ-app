@@ -45,7 +45,21 @@ export default function Profile(){
 		}
 	}
 
-	// console.log(allDemandes&&allDemandes.at(0))
+	async function handleDemands(etat, eid){
+		try {
+			let req = await fetch('/api/update-demande', {
+				method: "POST",
+				headers: {
+					'content-type':'application/json'
+				},
+				body: JSON.stringify({etat, eid})
+			})
+			if(req.ok) router.reload()
+
+		}catch(err){
+			console.error(err)
+		}
+	}
 
 
 	return(
@@ -89,10 +103,12 @@ export default function Profile(){
 								return <div className={s.demand_element} key={index}>
 									<p>{index}</p>
 									<p>{entry.title}</p>
+									<p>{entry.status}</p>
 									<p>{formattedDate}</p>
 									<div>
-										<CheckIcon style={{color:'green'}} />
-										<CloseIcon style={{color:'red'}} />
+										<CheckIcon onClick={() => handleDemands('accepte', entry.id)} style={{cursor:'pointer',color:'green'}} />
+										<CloseIcon onClick={() => handleDemands('refuse', entry.id)} style={{cursor:'pointer',color:'red'}} />
+
 									</div>
 								</div>
 							})
