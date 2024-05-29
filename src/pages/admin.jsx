@@ -103,7 +103,7 @@ export default function Profile(){
 								return <div className={s.demand_element} key={index}>
 									<p>{index}</p>
 									<p>{entry.title}</p>
-									<p>{entry.status}</p>
+									<p style={{color:entry.status=="accepte"?"green":entry.status=="refuse"?"red":"grey"}}>{entry.status}</p>
 									<p>{formattedDate}</p>
 									<div>
 										<CheckIcon onClick={() => handleDemands('accepte', entry.id)} style={{cursor:'pointer',color:'green'}} />
