@@ -17,8 +17,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Profile(){
 	let router = useRouter()
-	let [tabState, setTabState] = useState(false)
-	let [docsList, setDocsList] = useState([])
+	let [tabState, setTabState] = useState(true)
+	// let [docsList, setDocsList] = useState([])
+	let [doc, setDoc] = useState({
+		docsList: [],
+		doc_date: null
+	})
 	let [userDemends, setUserDemands] = useState([])
 	let [loading, setLoading] = useState(true)
 	let [alert, setAlert] = useState({
@@ -54,19 +58,19 @@ export default function Profile(){
 	}
 
 	function handleCheckBoxChange(check) {
-		let exist = docsList.find(c => c === check)
+		let exist = doc.docsList.find(c => c === check)
 		if(exist) {
-			let filtred = docsList.filter(c => c !== check)
-			setDocsList(filtred)
+			let filtred = doc.docsList.filter(c => c !== check)
+			setDoc(prev => ({...prev, docsList: filtred}))
 		} else {
-			setDocsList(prev => [...prev, check])
+			setDoc(prev => ({...prev, docsList: [...doc.docsList, check]}))
 		}
 	}
 
 	async function handleAddDoc(){
 		let token = localStorage.getItem('app-token')
 		try {
-			if(docsList.length == 0) return setAlert({
+			if(doc.docsList.length == 0 || !doc.doc_date) return setAlert({
 				state:true,
 				message: "veuillez choisir un document",
 				severit:"error"
@@ -77,7 +81,7 @@ export default function Profile(){
 					'content-type':'application/json',
 					'x-authorization': token
 				},
-				body: JSON.stringify(docsList)
+				body: JSON.stringify(doc)
 			})
 			if(req.ok) router.reload()
 		} catch(err){
@@ -131,7 +135,9 @@ export default function Profile(){
 		        		<div className={s.demande_date}>
 			        		<p>Date de demande :</p>
 			        		<LocalizationProvider dateAdapter={AdapterDayjs}>
-			        			<DatePicker />
+			        			<DatePicker
+			        				onChange={e => setDoc(prev => ({...prev, doc_date: e.$d}))}
+			        			/>
 			        		</LocalizationProvider>
 		        		</div>
 		        		<p className={s.doc}>
@@ -156,10 +162,7 @@ export default function Profile(){
 		        	<div>
 		        		{
 							userDemends&&userDemends.map((dem, index) => {
-								let jsDate = new Date(dem.created_at);
-
-								const date = new Date(dem.created_at);
-
+								const date = new Date(dem.doc_date);
 								const day = date.getDate().toString().padStart(2, "0");
 								const month = (date.getMonth() + 1).toString().padStart(2, "0");
 								const year = date.getFullYear().toString();

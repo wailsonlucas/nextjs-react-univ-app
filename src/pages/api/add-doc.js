@@ -3,8 +3,8 @@ let jwt = require('jsonwebtoken')
 
 export default async function handler(req, res) {
 	try {
-		let docs_list = req.body
-		// console.log(docs_list)
+		let {docs_list, doc_date} = req.body
+
 		let authorization = req.headers['x-authorization']
 		// console.log(authorization)
 		let decoded = jwt.verify(authorization, 'my-secret-key');
@@ -14,17 +14,19 @@ export default async function handler(req, res) {
 
 		let insert_qry = `INSERT INTO demands(
 			user_nom,
-			title
+			title,
+			doc_date
 			) 
 			VALUES(
 			'${result.rows.at(0).nom}',
-			'demo-title'
+			'demo-title',
+			'${doc_date}'
 		) RETURNING *;`
 		
 		let res_qry = await pool.query(insert_qry) 
 
 		res.status(200).end()
-	
+
 	}catch(err){
 		console.error(err)
 		res.status(500).json('something went wrong')
