@@ -15,6 +15,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 export default function Profile(){
 	let router = useRouter()
+	let [anim, setAnim] = useState(false)
 	let [loading, setLoading] = useState(true)
 	let [allDemandes, setAllDemandes] = useState(true)
 	let [alert, setAlert] = useState({
@@ -22,6 +23,8 @@ export default function Profile(){
 		message:null,
 		severit:null
 	})
+
+	
 
 	useEffect(() => {
 		getAllDeamands()
@@ -67,6 +70,14 @@ export default function Profile(){
 		  router.push("/")
 	}
 
+	function handleStartAnim(etat, eid){
+		setAnim(true)
+		setTimeout(() => {
+	      setAnim(false);
+	      handleDemands(etat, eid)
+	    }, 3000);
+	}
+
 	return(
 		<>
 		{loading?
@@ -84,6 +95,11 @@ export default function Profile(){
 			  {alert.message}
 			</Alert>}
 		<div className={s.profile}>
+			{anim&&<div className={s.loading_anim}>
+				<CircularProgress />
+				<p>nous traitons votre demande, veuillez patienter</p>
+			</div>
+			}
 			<header>
 				Admin Page
 				<ClearIcon onClick={handleLogout} />
@@ -112,8 +128,8 @@ export default function Profile(){
 									<p style={{color:entry.status=="accepte"?"green":entry.status=="refuse"?"red":"grey"}}>{entry.status}</p>
 									<p>{formattedDate}</p>
 									<div>
-										<CheckIcon onClick={() => handleDemands('accepte', entry.id)} style={{cursor:'pointer',color:'green'}} />
-										<CloseIcon onClick={() => handleDemands('refuse', entry.id)} style={{cursor:'pointer',color:'red'}} />
+										<CheckIcon onClick={() => handleStartAnim('accepte', entry.id)} style={{cursor:'pointer',color:'green'}} />
+										<CloseIcon onClick={() => handleStartAnim('refuse', entry.id)} style={{cursor:'pointer',color:'red'}} />
 
 									</div>
 								</div>
