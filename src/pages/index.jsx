@@ -122,7 +122,7 @@ export default function Home() {
         localStorage.setItem('app-token', res.token)
 
         if(res.role === 'user') {
-          router.push('/demande')
+          router.push('/home')
         } else {
           router.push('/admin')
         }
