@@ -14,11 +14,12 @@ import Alert from '@mui/material/Alert';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CircularProgress from '@mui/material/CircularProgress';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function Profile(){
 	let router = useRouter()
 	let [tabState, setTabState] = useState(true)
-	// let [docsList, setDocsList] = useState([])
+	let [anim, setAnim] = useState(false)
 	let [doc, setDoc] = useState({
 		docsList: [],
 		doc_date: null
@@ -103,7 +104,20 @@ export default function Profile(){
 			console.error(err)
 		}
 	}
-	console.log(userDemandes)
+
+	function handleLogout(){
+		  localStorage.setItem('app-token', "")
+		  router.push("/")
+	}
+
+	function handleStartAnim(){
+		setAnim(true)
+		setTimeout(() => {
+	      setAnim(false);
+	      handleAddDoc()
+	    }, 3000);
+	}
+
 	return(
 		<>
 		{loading?
@@ -121,8 +135,14 @@ export default function Profile(){
 			  {alert.message}
 			</Alert>}
 		<div className={s.profile}>
+			{anim&&<div className={s.loading_anim}>
+				<CircularProgress />
+				<p>nous traitons votre demande, veuillez patienter</p>
+			</div>
+			}
 			<header>
 				Votre profile
+				<ClearIcon onClick={handleLogout} />
 			</header>
 			<div className={s.content}>
 				<Tabs aria-label="basic tabs example">
@@ -156,7 +176,7 @@ export default function Profile(){
 		        			<Checkbox onClick={() => handleCheckBoxChange('Fiche de transfer')} />
 		        			<p>Fiche de transfer</p>
 		        		</p>
-		        		<button className={s.submit} onClick={handleAddDoc}>Validez</button>
+		        		<button className={s.submit} onClick={handleStartAnim}>Validez</button>
 		        	</div>
 		        	:
 		        	<div>

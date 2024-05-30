@@ -1,8 +1,10 @@
 .profile {
+	position: relative;
 	background:#F1E5D1;
 	min-height: 100vh;
 }
 .profile header {
+	position: relative;
 	color:#fff;
 	height: 200px;
 	display: flex;
@@ -12,12 +14,30 @@
 	font-size:3rem;
 	margin-bottom:40px;
 }
+.profile header svg {
+	color:#fff;
+	position: absolute;
+	top:5%;
+	right: 5%;
+	font-size: 3rem;
+	cursor: pointer;
+}	
 /*============*/
 .content {
 	width:60%;
 	margin:0 auto;
-	min-height: 80vh;
-/*	margin-top:20px;*/
+	min-height: 300px;
+	border:1px solid #ccc;
+	background: #fff;
+	padding:10px;
+	border-radius: 4px;
+}
+.link_container {
+	text-align: center;
+	font-size: 1.4rem;
+}
+.link_container a {
+	color:#DC5F00;
 }
 .demande_date {
 	display: flex;
@@ -41,6 +61,25 @@
 .doc {
 	display: flex;
 	align-items:center;
+}
+.loading_anim {
+	position: fixed;
+	z-index: 4;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	background: #fff;
+	height: 200px;
+	width:400px;
+	border:1px solid grey;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.loading_anim p {
+	font-size: 1.2rem;
+	margin-top:20px;
 }
 .loading {
 	display: flex;

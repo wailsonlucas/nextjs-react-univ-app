@@ -122,7 +122,7 @@ export default function Home() {
         localStorage.setItem('app-token', res.token)
 
         if(res.role === 'user') {
-          router.push('/profile')
+          router.push('/demande')
         } else {
           router.push('/admin')
         }
@@ -151,7 +151,7 @@ export default function Home() {
       <div className={s.hero}>
         <p className={s.welcom}>Bienvenue à Acceil</p>
 
-        <div className={s.accounts_types}>
+        {/*<div className={s.accounts_types}>
           <div>
             <p>Compte utilisateur normal:</p>
             <p>nome: user</p>
@@ -162,7 +162,7 @@ export default function Home() {
             <p>nome: admin</p>
             <p>n_inscription: 99885566</p>
           </div>
-        </div>
+        </div>*/}
 
          <div className={s.inputs_container}>
             {

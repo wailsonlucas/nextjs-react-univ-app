@@ -21,7 +21,7 @@
   border-radius: 6px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.accounts_types {
+/*.accounts_types {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@
 }
 .accounts_types > div > p:first-child {
   color:grey;
-}
+}*/
 .inputs_container {
   width:50%;
   margin:0 auto;

@@ -11,6 +11,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import ClearIcon from '@mui/icons-material/Clear';
 
 export default function Profile(){
 	let router = useRouter()
@@ -61,6 +62,10 @@ export default function Profile(){
 		}
 	}
 
+	function handleLogout(){
+		  localStorage.setItem('app-token', "")
+		  router.push("/")
+	}
 
 	return(
 		<>
@@ -81,6 +86,7 @@ export default function Profile(){
 		<div className={s.profile}>
 			<header>
 				Admin Page
+				<ClearIcon onClick={handleLogout} />
 			</header>
 			<div className={s.content}>
 				{
